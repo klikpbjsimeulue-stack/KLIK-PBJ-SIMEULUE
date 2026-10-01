@@ -574,10 +574,40 @@
             closeFormModal();
         }
 
-        async function kirimJawabanTim() {
-            alert('Jawaban Tim Berhasil Disimpan!');
-            closePortalTimModal();
-        }
+      async function kirimJawabanTim() {
+    const noTiket = document.getElementById('selectTiketProses').value;
+    const namaTim = document.getElementById('inputNamaTim').value;
+    const jawaban = document.getElementById('inputTextJawabanTim').value;
+
+    if (!namaTim || !jawaban) {
+        alert('Mohon isi Nama Petugas dan Jawaban Tanggapan!');
+        return;
+    }
+
+    const URL_APPS_SCRIPT = "GANTI_DENGAN_URL_WEB_APP_ANDA";
+
+    const payload = {
+        action: "jawab_tiket",
+        no_tiket: noTiket,
+        nama_tim: namaTim,
+        jawaban_tim: jawaban
+    };
+
+    try {
+        await fetch(URL_APPS_SCRIPT, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        alert('Jawaban Tim Berhasil Disimpan dan Diperbarui di Google Sheets!');
+        closePortalTimModal();
+        location.reload();
+    } catch (err) {
+        alert('Gagal mengirim data: ' + err);
+    }
+}
 
         function filterTable() {
             const q = document.getElementById('inputSearch').value.toLowerCase();
