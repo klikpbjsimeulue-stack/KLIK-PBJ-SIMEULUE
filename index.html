@@ -36,7 +36,7 @@
         <!-- SIDEBAR KIRI (4 COLS) -->
         <div class="lg:col-span-4 space-y-4">
 
-            <!-- VISI KABUPATEN (DIPINDAHKAN KE ATAS PENGATURAN BANNER) -->
+            <!-- VISI KABUPATEN -->
             <div class="bg-[#121a36] border border-slate-800 p-4 rounded-2xl text-center shadow">
                 <p class="text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-semibold">VISI KABUPATEN SIMEULUE TAHUN 2030</p>
                 <p class="text-xs md:text-sm text-sky-400 italic font-bold">
@@ -250,6 +250,7 @@
                                 <th class="p-2.5">Permasalahan</th>
                                 <th class="p-2.5 text-center">Jawaban Tim KLIK-PBJ</th>
                                 <th class="p-2.5 text-center">Status</th>
+                                <th class="p-2.5 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="bodyTabelJawaban" class="divide-y divide-slate-800 text-slate-200 text-[11px]">
@@ -260,6 +261,11 @@
                                 <td class="p-2.5 max-w-xs truncate">Keterlambatan pengiriman material e-purchasing...</td>
                                 <td class="p-2.5 text-center max-w-xs truncate">Diberikan adendum waktu sesuai ketentuan...</td>
                                 <td class="p-2.5 text-center"><span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold text-[10px]">SELESAI</span></td>
+                                <td class="p-2.5 text-center">
+                                    <button onclick="lihatDetailJawaban('#TKT-001', 'Ahmad, ST (Dinas PU)', 'Pengadaan Barang', 'Keterlambatan pengiriman material e-purchasing karena kendala transportasi cuaca.', 'Diberikan adendum waktu sesuai ketentuan pasal kewajiban penyedia dan kondisi force majeure.')" class="bg-sky-500 hover:bg-sky-600 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 shadow">
+                                        <i class="fas fa-eye"></i> Lihat Jawaban
+                                    </button>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="p-2.5 font-mono text-amber-400 font-bold">#TKT-002<br><span class="text-[10px] text-slate-400 font-sans">01/10/2026</span></td>
@@ -268,6 +274,11 @@
                                 <td class="p-2.5 max-w-xs truncate">Evaluasi penawaran teknis tender gedung...</td>
                                 <td class="p-2.5 text-center text-slate-500 italic">Sedang Ditelaah Tim</td>
                                 <td class="p-2.5 text-center"><span class="bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full font-bold text-[10px]">PROSES</span></td>
+                                <td class="p-2.5 text-center">
+                                    <button onclick="lihatDetailJawaban('#TKT-002', 'Budi Prasetyo (Dinkes)', 'Jasa Konstruksi', 'Evaluasi penawaran teknis tender gedung kesehatan.', 'Pertanyaan/konsultasi ini masih dalam tahap penelaahan oleh Tim KLIK-PBJ.')" class="bg-sky-500 hover:bg-sky-600 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 shadow">
+                                        <i class="fas fa-eye"></i> Lihat Jawaban
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -276,6 +287,33 @@
 
         </div>
 
+    </div>
+
+    <!-- MODAL DETAIL JAWABAN (UNTUK TOMBOL LIHAT JAWABAN) -->
+    <div id="modalDetailJawaban" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-[#1c2541] border border-sky-500/30 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
+            <button onclick="closeDetailJawabanModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="border-b border-slate-800 pb-3">
+                <h3 id="detailNomorTiket" class="text-base font-bold text-amber-400 font-mono">#TKT-000</h3>
+                <p id="detailPemohon" class="text-xs text-slate-300">Nama Pemohon / SKPK</p>
+                <span id="detailJenis" class="inline-block mt-1 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-500/30">Jenis Konsultasi</span>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <span class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Permasalahan:</span>
+                    <p id="detailPermasalahanText" class="bg-[#0b132b] p-3 rounded-xl border border-slate-800 text-slate-200">Uraian masalah...</p>
+                </div>
+                <div>
+                    <span class="block font-bold text-sky-400 uppercase text-[10px] mb-1">Tanggapan / Jawaban Tim KLIK-PBJ:</span>
+                    <p id="detailJawabanText" class="bg-[#0b132b] p-3 rounded-xl border border-sky-500/30 text-amber-300 leading-relaxed font-medium">Jawaban tim...</p>
+                </div>
+            </div>
+            <button onclick="closeDetailJawabanModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2 rounded-xl text-xs transition-all">
+                Tutup
+            </button>
+        </div>
     </div>
 
     <!-- MODAL 1: FORMULIR PENGAJUAN KONSULTASI -->
@@ -446,7 +484,7 @@
 
     <!-- JAVASCRIPT LOGIK & INTERAKSI -->
     <script>
-        // Memuat logo dari LocalStorage saat halaman pertama kali dibuka/dihidupkan kembali
+        // Memuat logo dari LocalStorage saat halaman dibuka
         document.addEventListener("DOMContentLoaded", function() {
             const savedLogo = localStorage.getItem("klikPbjLogoHeader");
             const savedFileName = localStorage.getItem("klikPbjLogoFileName");
@@ -458,7 +496,7 @@
             }
         });
 
-        // Simpan gambar ke LocalStorage saat pengguna mengunggah file baru
+        // Simpan gambar ke LocalStorage
         function previewLogoHeader(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -467,12 +505,25 @@
                     document.getElementById('headerLogoImg').src = base64Image;
                     document.getElementById('namaFileBanner').innerText = input.files[0].name;
                     
-                    // Simpan ke Browser LocalStorage
                     localStorage.setItem("klikPbjLogoHeader", base64Image);
                     localStorage.setItem("klikPbjLogoFileName", input.files[0].name);
                 }
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+
+        // Modal Detail Jawaban (Tombol Lihat Jawaban)
+        function lihatDetailJawaban(noTiket, pemohon, jenis, masalah, jawaban) {
+            document.getElementById('detailNomorTiket').innerText = noTiket;
+            document.getElementById('detailPemohon').innerText = pemohon;
+            document.getElementById('detailJenis').innerText = jenis;
+            document.getElementById('detailPermasalahanText').innerText = masalah;
+            document.getElementById('detailJawabanText').innerText = jawaban;
+            document.getElementById('modalDetailJawaban').classList.remove('hidden');
+        }
+
+        function closeDetailJawabanModal() {
+            document.getElementById('modalDetailJawaban').classList.add('hidden');
         }
 
         // Modal Formulir Konsultasi
@@ -487,7 +538,7 @@
             document.getElementById('formInputUtama').reset();
         }
 
-        // Submit Form Registrasi Tiket
+        // Submit Form Registrasi Tiket Baru
         function submitFormKeSheet(e) {
             e.preventDefault();
             const nama = document.getElementById('inputNama').value;
@@ -507,6 +558,11 @@
                     <td class="p-2.5 max-w-xs truncate">${uraian}</td>
                     <td class="p-2.5 text-center text-slate-500 italic">Menunggu Tanggapan Tim</td>
                     <td class="p-2.5 text-center"><span class="bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full font-bold text-[10px]">PROSES</span></td>
+                    <td class="p-2.5 text-center">
+                        <button onclick="lihatDetailJawaban('${tktNum}', '${nama} (${skpk})', '${jenis}', '${uraian}', 'Pertanyaan baru diajukan, menunggu tanggapan resmi tim.')" class="bg-sky-500 hover:bg-sky-600 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 shadow">
+                            <i class="fas fa-eye"></i> Lihat Jawaban
+                        </button>
+                    </td>
                 </tr>
             `;
             tbody.innerHTML = newRow + tbody.innerHTML;
