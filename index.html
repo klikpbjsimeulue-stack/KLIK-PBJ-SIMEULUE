@@ -11,20 +11,28 @@
 </head>
 <body class="bg-[#0b132b] text-slate-100 min-h-screen font-sans">
 
-   <!-- HEADER UTAMA DENGAN LOGO INTERAKTIF -->
-<header class="bg-[#121a36] border border-slate-800 rounded-2xl p-5 mb-5 shadow-xl">
-    <div class="flex items-center gap-5">
-        <!-- WADAH LOGO HEADER -->
+   <!-- HEADER UTAMA TERINTEGRASI DENGAN VISI KABUPATEN -->
+<header class="bg-[#121a36] border border-slate-800 rounded-2xl p-5 mb-5 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+    <!-- LOGO DAN JUDUL UTAMA -->
+    <div class="flex items-center gap-4">
         <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden bg-white p-1.5 flex-shrink-0 flex items-center justify-center shadow-lg border border-slate-700">
             <img id="headerLogoImg" src="logo_simeulue.png" onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e293b/amber400?text=KLIK-PBJ';" alt="Logo KLIK-PBJ" class="w-full h-full object-contain">
         </div>
         <div>
             <h1 class="text-2xl md:text-3xl font-black text-amber-400 tracking-wider uppercase drop-shadow">KLIK-PBJ SIMEULUE</h1>
-            <p class="text-xs md:text-sm text-slate-200 font-medium leading-snug mt-1">
+            <p class="text-xs md:text-sm text-slate-200 font-medium leading-snug mt-0.5">
                 Klinik Layanan Integrasi Konsultasi Pengadaan Barang dan Jasa
             </p>
             <p class="text-xs md:text-sm text-emerald-400 font-bold mt-0.5">Kabupaten Simeulue</p>
         </div>
+    </div>
+
+    <!-- VISI KABUPATEN (DIDALAM HEADER) -->
+    <div class="bg-[#0b132b]/80 border border-slate-800/80 p-3 px-5 rounded-xl text-center md:text-right max-w-xl">
+        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">VISI KABUPATEN SIMEULUE TAHUN 2030</p>
+        <p class="text-xs md:text-sm text-sky-400 italic font-bold leading-relaxed">
+            "Mewujudkan Simeulue yang bermartabat & pusat pertumbuhan ekonomi biru."
+        </p>
     </div>
 </header>
 
